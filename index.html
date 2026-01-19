@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="SKY PREDICT - Your ultimate JARVIS-powered weather intelligence system. Get real-time weather forecasts, 7-day predictions, 6-month climate data, and personalized AI weather insights with a stunning futuristic interface.">
+    <title>SKY PREDICT | JARVIS ULTIMATE</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="grid-bg"></div>
+
+    <div id="intro-screen">
+        <canvas id="starCanvas" class="star-bg"></canvas>
+
+        <div class="jarvis-orb">
+            <div class="orb-core"></div>
+            <div class="orb-ring"></div>
+            <div class="orb-ring"></div>
+            <div class="orb-ring"></div>
+        </div>
+
+        <h1 class="intro-title">SKY PREDICT</h1>
+        <p class="sub-tag">100% REAL DATA • JARVIS AI</p>
+        <div class="loader-track">
+            <div class="loader-fill"></div>
+        </div>
+    </div>
+
+    <div class="app-container" id="main-app">
+        <!-- Left Panel -->
+        <div class="glass-panel" style="overflow-y: auto;">
+            <div class="hud-header">
+                <i data-lucide="globe" style="width: 20px;"></i>
+                <h3>Location</h3>
+            </div>
+
+            <div class="api-badge">
+                ⚡ LIVE DATA • HOURLY UPDATES
+            </div>
+
+            <div class="search-container">
+                <i data-lucide="search" class="search-icon" style="width: 18px;"></i>
+                <input type="text" id="location-search" class="search-input" placeholder="Search any city..."
+                    autocomplete="off">
+                <button class="search-btn" onclick="searchLocation()">GO</button>
+                <div class="suggestions-dropdown" id="suggestions"></div>
+            </div>
+
+            <div id="current-weather" class="current-weather">
+                <div class="loading-spinner"></div>
+            </div>
+
+            <div class="jarvis-terminal">
+                <div class="terminal-header">
+                    <span class="terminal-blink"></span>
+                    <span>> JARVIS_LIVE_MODE</span>
+                </div>
+                <div class="terminal-text" id="jarvis-text"></div>
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="glass-panel forecast-panel">
+            <div class="hud-header">
+                <i data-lucide="activity" style="width: 20px;"></i>
+                <h3>Weather Forecast</h3>
+            </div>
+
+            <div class="forecast-tabs">
+                <button class="tab-btn active" onclick="switchTab('7day')">7-Day Forecast</button>
+                <button class="tab-btn" onclick="switchTab('6month')">6-Month Climate</button>
+            </div>
+
+            <!-- 7-DAY TAB -->
+            <div id="7day-tab" class="tab-content active">
+                <div class="chart-container">
+                    <canvas id="forecastChart"></canvas>
+                </div>
+                <div class="daily-forecast-grid" id="daily-grid"></div>
+            </div>
+
+            <!-- 6-MONTH TAB -->
+            <div id="6month-tab" class="tab-content">
+                <div class="chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+                <div class="daily-forecast-grid" id="monthly-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHATBOT BUTTON -->
+    <button class="chatbot-button" onclick="toggleChatbot()">
+        <i data-lucide="message-circle" style="width: 28px; height: 28px;"></i>
+    </button>
+
+    <!-- CHATBOT CONTAINER -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">
+                    <i data-lucide="bot" style="width: 24px; height: 24px; color: white;"></i>
+                </div>
+                <div>
+                    <div class="chatbot-title">JARVIS Assistant</div>
+                    <div class="chatbot-status">● Online</div>
+                </div>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()">
+                <i data-lucide="x" style="width: 24px; height: 24px;"></i>
+            </button>
+        </div>
+
+        <div class="chatbot-messages" id="chat-messages">
+            <div class="message bot">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    Hello! I'm JARVIS, your advanced weather intelligence assistant. I can provide detailed weather
+                    forecasts, smart clothing recommendations, travel advice, and personalized weather insights. How may
+                    I assist you today?
+                </div>
+            </div>
+        </div>
+
+        <div class="chatbot-input-container">
+            <input type="text" class="chatbot-input" id="chat-input" placeholder="Ask me anything about weather..."
+                onkeypress="handleChatKeyPress(event)">
+            <button class="chatbot-send" onclick="sendMessage()">
+                <i data-lucide="send" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- WEATHER ALERT TOASTS -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
